@@ -1,4 +1,4 @@
-import { seedDatabase } from '../seed'
+//import { seedDatabase } from '../seed'
 
 import Firebase from 'firebase/app';
 import 'firebase/firestore';
@@ -20,6 +20,6 @@ const config = {
 const firebase = Firebase.initializeApp(config);
 const { FieldValue } = Firebase.firestore;
 
-seedDatabase(firebase);
+//seedDatabase(firebase);
 
 export { firebase, FieldValue };
