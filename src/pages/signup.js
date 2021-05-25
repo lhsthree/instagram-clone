@@ -1,9 +1,11 @@
 import React, {useState, useEffect, useContext} from 'react'
 import {Link, useHistory} from 'react-router-dom';
 import FirebaseContext from '../context/firebase';
-import * as ROUTES from '../constants/routes'
+import * as ROUTES from '../constants/routes';
+import { doesUsernameExist} from '../services/firebase'
 
 export default function SignUp() {
+	const history = useHistory()
 	const { firebase } = useContext(FirebaseContext)
 
 	const [ username, setUsername] = useState('');
@@ -16,29 +18,37 @@ export default function SignUp() {
 	const handleSignUp = async (event) => {
 		event.preventDefault();
 
-		try {
-			const createdUserResult = await firebase.auth().createUserWithEmailAndPassword(emailAddress, password);
+		const usernameExists = await doesUsernameExist(username);
+			if (!usernameExists.length) {
+				try {
+				const createdUserResult = await firebase.auth().createUserWithEmailAndPassword(emailAddress, password);
 
-			await createdUserResult.user.updateProfile({
-				displayName: username
-			})
+				await createdUserResult.user.updateProfile({
+					displayName: username
+				})
 
-			await firebase.firestore().collection('users').add({
-				userId: createdUserResult.user.uid,
-				userName: username.toLowerCase(),
-				fullName,
-				emailAddress: emailAddress.toLowerCase(),
-				following: [],
-				dateCreated: Date.now()
-			})
-		} catch (error) {
-			setFullName('')
+				await firebase.firestore().collection('users').add({
+					userId: createdUserResult.user.uid,
+					userName: username.toLowerCase(),
+					fullName,
+					emailAddress: emailAddress.toLowerCase(),
+					following: [],
+					followers: [],
+					dateCreated: Date.now(),
+				})
+				history.push(ROUTES.DASHBOARD)
+			} catch (error) {
+				setUsername('')
+				setFullName('')
+				setFullName('')
+				setError("that username is already taken, please try another");
+			}
+		}else {
 			setEmailAddress('');
 			setPassword('');
-			setError(error.message);
 		}
-
 	}
+		
 
 	useEffect(() => {
 			document.title = 'Sign Up - Instagram'
