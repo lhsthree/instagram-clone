@@ -14,7 +14,6 @@ export default function Login() {
 
 	const handleLogin = async (event) => {
 		event.preventDefault();
-		console.log("click")
 
 		try {
 			await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
