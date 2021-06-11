@@ -5,7 +5,7 @@ import * as ROUTES from '../constants/routes';
 
 export default function Header() {
     const { firebase } = useContext(FirebaseContext);
-    const user = {};
+    const user = null
     
     return (
         <header className="h-16 bg-white border-b mb-8">
@@ -36,21 +36,29 @@ export default function Header() {
                                     }}
                                     >
                                     Sign Out
-                                    </button>  
+                                    </button>
+                                    <div className="flex items-center cursor-pointer">
+                                    <Link to={`/p/${user.displayName}`}>
+                                    	<img
+                                    		className="rounded-full h8 w-8 flex"
+                                    		src={`/images/avatars/${user.displayName}.jpg`}
+                                            alt={`${user.displayName}`} />
+                                    </Link>
+                                </div>  
                             </>
                         ) : (
                             <>
                                 <Link to={ROUTES.LOGIN}>
                                     <button 
                                         type="button"
-                                        className="bg-blue font-bold text-sm rounded w-20 h-8">
+                                        className="bg-blue-500 text-white font-bold text-sm rounded w-20 h-8">
                                         Log In
                                     </button>
                                 </Link>
                                 <Link to={ROUTES.SIGN_UP}>
                                 	<button 
                                         type="button"
-                                        className="bg-blue font-bold text-sm rounded w-20 h-8">
+                                        className="font-bold text-sm rounded w-20 h-8">
                                         Sign Up
                                     </button>
                                 </Link>
