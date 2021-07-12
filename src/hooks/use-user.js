@@ -1,22 +1,18 @@
 import { useState, useEffect, useContext } from 'react';
-import { getUserByUserId } from '../services/firebase';
 import UserContext from '../context/user';
 
-export default function useUser() {
-	const [activeUser, setActiveUser] = useState({});
-	const { user } = useContext(UserContext);
+export default function useFollowedUsersPhotos() {
+	const [photos, setPhotos] = useState(null)
+	const {
+		user: { uid: userId = ''}
+	}  = useContext(UserContext);
 
 	useEffect(() => {
-		async function getUserObjByUserId() {
-			const [response] = await getUserByUserId(user.uid)
-			setActiveUser({ ...response });
-		}
-		if (user && user.uid) {
-			getUserObjByUserId();
-		}
-	}, [user]);
+		async function getTimelinePhotos() {}
 
+		getTimelinePhotos();
+	}, [userId])
 
-	return { user: activeUser} 
+	return { photos };
 }
 
