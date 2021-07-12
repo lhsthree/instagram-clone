@@ -4,7 +4,6 @@ import useFollowedUsersPhotos from '../hooks/use-followed-users-photos';
 
 export default function Timeline() {
     const { photos } = useFollowedUsersPhotos();
-    console.log(photos);
     
     return (
         <div className="container col-span-2">
@@ -15,7 +14,7 @@ export default function Timeline() {
                     ))}
                 </>
             ) : photos && photos.length > 0 ? (
-                photos.map((content) => <p>I will be a photo</p>)
+                photos.map((content) => <p key={content.docId}>{content.username}</p>)
             ) : (
                 <p className="text-center text-2xl">Follow people to see photos!</p>
             )}
