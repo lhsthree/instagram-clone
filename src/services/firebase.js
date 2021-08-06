@@ -84,3 +84,7 @@ export async function getUserFollowedPhotos(userId, followingUserIds) {
     
     return photosWithUserDetails;
 }
+
+export async function getUserByUsername() {
+    
+}
