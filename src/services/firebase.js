@@ -121,8 +121,6 @@ export async function getUserPhotosByUsername(username) {
         .where('userId', '==', userId)
         .get();
 
-    console.log(userId)
-
     const photos = result.docs.map((item) => ({
         ...item.data(),
         docId: item.id
